@@ -23,33 +23,34 @@
 
         <aside class="left_aside">
             <img src="../Images/GCSocialMediav2a.jpg" alt="Game changer">
+            <img src="../Images/GCSocialMediav2a.jpg" alt="Game changer">
         </aside>
 
         <main class="check_in_main">
             <section class="Check_In_Title">
-                <h2 class="CheckIn_h2">check-in</h2>
+                <h2 class="CheckIn_h2">Check-In</h2>
             </section>
-            <table class="Check_In_Table">
-                <tr>
-                    <th>     </th>
-                    <th class="Special"></th>
-                    <th class="Avatar">Avatar</th>
-                    <th>Name</th>
-                    <th>Number Of Times Attended</th>
-                    <th class="Special"></th>
-                    <th>        </th>
-                </tr>
-                <tr>
-                    <td class="special1"></td>
-                    <td class="Special"></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td class="Special"></td>
-                    <td class="special1"></td>
-                </tr>
+            <input class="Input" type="file" id="fileInput" accept=".xlsx, .xls" />
+            <table class="Check_In_Table" id="CheckIn_Table">
+                <thead>
+                    <tr>
+                        <th>Avatar</th>
+                        <th>Name</th>
+                        <th>Number Of Times Attended</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+
+                </tbody>
             </table>
-            
+
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.min.js"></script>
+            <script>
+                const fileInput1 = document.getElementById('fileInput1');
+                const tableBody = document.getElementById('tableBody');
+            </script>
+
+
         </main>
 
         <aside class="right_aside">
@@ -59,7 +60,7 @@
     </div>
     
     <footer>
-        <p>&copy; 2024 My First Website. All rights reserved.</p>
+        <p class="footer_text">&copy; 2024 My First Website. All rights reserved.</p>
     </footer>
 </body>
 </html>

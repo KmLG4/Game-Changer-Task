@@ -58,7 +58,7 @@ footer {
     padding: 1rem;
     height: auto;
     bottom: 0;
-    position: fixed;
+    position: sticky;
     width: 100%;
     box-shadow: 0 -2px 4px r gba(0, 0, 0, 0.1);
     flex-direction: row;
@@ -98,6 +98,7 @@ img {
     border-style: solid;
     background-color: #5F9EA0;
     border-color: #5F9EA0;
+    vertical-align: auto ;
 }
 
 .right_aside {
@@ -158,16 +159,16 @@ img {
 }
 
 .Check_In_Title {
-    max-width: 600px;
+    width: 400px;
     margin-left: auto;
     margin-right: auto;
+
 
 }
 
 .CheckIn_h2 {
     font-size: 24px;
-    width: 600px;
-    
+    width: auto;
 }
 
 .contact_us {
@@ -182,7 +183,7 @@ img {
     margin: 10 auto;
     padding: 5px;
     border-style: solid;
-    border-radius: 15%;
+    border-radius: 3%;
     border-color: #36454F;
     margin-left: auto;
     margin-right: auto;
@@ -212,4 +213,39 @@ td {
 
 .Special {
     border-style: none;
+}
+
+.Special2 {
+    border-top: none;
+}
+
+.special1 {
+    border-bottom: none;
+    border-top: none;
+}
+
+.special0 {
+    border-bottom: none;
+}
+
+.button1 {
+    width: 73.13px;
+    height: 51.59px;
+    background-color: #FFFACD;
+    border-style: none;
+    
+}
+
+.special_td {
+    padding: 0px;
+}
+
+input {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.footer_text{
+    margin-left: auto;
+    margin-right: auto;
 }
