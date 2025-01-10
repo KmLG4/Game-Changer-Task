@@ -200,3 +200,220 @@
                     <td class="Special2"></td>
                 </tr>
             </table>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Changer CHeck-In</title>
+    <link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+    <header>
+        <h1>Check-In</h1>
+    </header>
+    
+    <nav>
+        <a href="home.html">Home</a>
+        <a href="check-in.html">Check-In</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+    </nav>
+
+    <div class="container-2">
+
+        <aside class="left_aside">
+            <img src="../Images/GCSocialMediav2a.jpg" alt="Game changer">
+            <img src="../Images/GCSocialMediav2a.jpg" alt="Game changer">
+            <img src="../Images/GCSocialMediav2a.jpg" alt="Game changer">
+        </aside>
+
+        <main class="check_in_main">
+            <section class="Check_In_Title">
+                <h2 class="CheckIn_h2">Check-In</h2>
+            </section>
+            <input class="Input" type="file" id="fileInput1" accept=".xlsx, .xls" />
+            <table class="Check_In_Table" id="CheckIn_Table">
+                <thead>
+                    <tr>
+                        <th>Avatar</th>
+                        <th>Name</th>
+                        <th>Number Of Times Attended</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+
+                </tbody>
+            </table>
+
+        <script>
+            function exportToExcel() {
+                // Select the table
+                const table = document.getElementById('dataTable');
+            
+                // Convert table to workbook
+                const workbook = XLSX.utils.table_to_book(table);
+            
+                // Write to Excel file
+                XLSX.writeFile(workbook, 'exported_data.xlsx');
+            }
+        </script>
+
+        </main>
+
+        <aside class="right_aside">
+            <img src="../Images/GCSocialMediav2a.jpg" alt="Game changer">
+            <img src="../Images/GCSocialMediav2a.jpg" alt="Game changer">
+            <img src="../Images/GCSocialMediav2a.jpg" alt="Game changer">
+        </aside>
+
+    </div>
+    
+    <footer>
+        <p class="footer_text">&copy; 2024 My First Website. All rights reserved.</p>
+    </footer>
+</body>
+</html>
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Changer Check-In</title>
+    <link rel="stylesheet" href="styles.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.5/xlsx.full.min.js"></script>
+</head>
+<body>
+    <header>
+        <h1>Check-In</h1>
+    </header>
+    
+    <nav>
+        <a href="home.html">Home</a>
+        <a href="check-in.html">Check-In</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+    </nav>
+
+    <div class="container-2">
+        <aside class="left_aside">
+            <img src="../Images/GCSocialMediav2a.jpg" alt="Game changer">
+            <img src="../Images/GCSocialMediav2a.jpg" alt="Game changer">
+            <img src="../Images/GCSocialMediav2a.jpg" alt="Game changer">
+        </aside>
+
+        <main class="check_in_main">
+            <section class="Check_In_Title">
+                <h2 class="CheckIn_h2">Check-In</h2>
+            </section>
+            <input class="Input" type="file" id="fileInput" accept=".xlsx, .xls" onchange="handleFileUpload(event)" />
+            <table class="Check_In_Table" id="CheckInTable">
+                <thead>
+                    <tr>
+                        <th>Avatar</th>
+                        <th>Name</th>
+                        <th>Number Of Times Attended</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                    <!-- Rows will be dynamically populated here -->
+                </tbody>
+            </table>
+            <button onclick="exportToExcel()">Export to Excel</button>
+        </main>
+
+        <aside class="right_aside">
+            <img src="../Images/GCSocialMediav2a.jpg" alt="Game changer">
+            <img src="../Images/GCSocialMediav2a.jpg" alt="Game changer">
+            <img src="../Images/GCSocialMediav2a.jpg" alt="Game changer">
+        </aside>
+    </div>
+    
+    <footer>
+        <p class="footer_text">&copy; 2024 My First Website. All rights reserved.</p>
+    </footer>
+
+    <script>
+        let workbook = null;
+        let worksheet = null;
+
+        function handleFileUpload(event) {
+            const file = event.target.files[0];
+            const reader = new FileReader();
+
+            reader.onload = function(e) {
+                const data = new Uint8Array(e.target.result);
+                workbook = XLSX.read(data, {type: 'array'});
+                
+                worksheet = workbook.Sheets[workbook.SheetNames[0]];
+                
+                const jsonData = XLSX.utils.sheet_to_json(worksheet, {header: 1});
+                
+                const tableBody = document.getElementById('tableBody');
+                tableBody.innerHTML = '';
+                
+                for (let i = 1; i < jsonData.length; i++) {
+                    const row = jsonData[i];
+                    const tr = document.createElement('tr');
+                    
+                    const avatarCell = document.createElement('td');
+                    avatarCell.textContent = row[0] || '';
+                    
+                    const nameCell = document.createElement('td');
+                    nameCell.textContent = row[1] || '';
+                    
+                    const attendanceCell = document.createElement('td');
+                    attendanceCell.textContent = row[2] || 0;
+                    attendanceCell.id = `attendance-${i}`;
+                    
+                    const actionCell = document.createElement('td');
+                    const incrementBtn = document.createElement('button');
+                    incrementBtn.textContent = 'Increment';
+                    incrementBtn.onclick = () => incrementAttendance(i, attendanceCell);
+                    actionCell.appendChild(incrementBtn);
+                    
+                    tr.appendChild(avatarCell);
+                    tr.appendChild(nameCell);
+                    tr.appendChild(attendanceCell);
+                    tr.appendChild(actionCell);
+                    
+                    tableBody.appendChild(tr);
+                }
+            };
+
+            reader.readAsArrayBuffer(file);
+        }
+
+        function incrementAttendance(rowIndex, attendanceCell) {
+            let currentAttendance = parseInt(attendanceCell.textContent) || 0;
+            
+            currentAttendance++;
+            
+            attendanceCell.textContent = currentAttendance;
+            
+            if (worksheet) {
+                const cellAddress = XLSX.utils.encode_cell({r: rowIndex, c: 2});
+                worksheet[cellAddress] = { v: currentAttendance };
+            }
+        }
+
+        function exportToExcel() {
+            if (!workbook) {
+                alert('Please upload a file first');
+                return;
+            }
+
+            XLSX.writeFile(workbook, 'updated_check_in.xlsx');
+        }
+    </script>
+</body>
+</html>

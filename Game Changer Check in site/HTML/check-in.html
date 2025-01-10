@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Changer Check-In</title>
+    <link rel="stylesheet" href="styles.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.5/xlsx.full.min.js"></script>
+</head>
+<body>
+    <header>
+        <h1>Check-In</h1>
+    </header>
+    
+    <nav>
+        <a href="home.html">Home</a>
+        <a href="check-in.html">Check-In</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+    </nav>
+
+    <div class="container-2">
+        <aside class="left_aside">
+            <img src="../Images/GCSocialMediav2a.jpg" alt="Game changer">
+            <img src="../Images/GCSocialMediav2a.jpg" alt="Game changer">
+            <img src="../Images/GCSocialMediav2a.jpg" alt="Game changer">
+        </aside>
+
+        <main class="check_in_main">
+            <section class="Check_In_Title">
+                <h2 class="CheckIn_h2">Check-In</h2>
+            </section>
+            <input class="Input" type="file" id="fileInput" accept=".xlsx, .xls" onchange="handleFileUpload(event)" />
+            <table class="Check_In_Table" id="CheckInTable">
+                <thead>
+                    <tr>
+                        <th>Avatar</th>
+                        <th>Name</th>
+                        <th>Number Of Times Attended</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                    <!-- Rows will be dynamically populated here -->
+                </tbody>
+            </table>
+            <button onclick="exportToExcel()">Export to Excel</button>
+        </main>
+
+        <aside class="right_aside">
+            <img src="../Images/GCSocialMediav2a.jpg" alt="Game changer">
+            <img src="../Images/GCSocialMediav2a.jpg" alt="Game changer">
+            <img src="../Images/GCSocialMediav2a.jpg" alt="Game changer">
+        </aside>
+    </div>
+    
+    <footer>
+        <p class="footer_text">&copy; 2024 My First Website. All rights reserved.</p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
+    <script>
+    const fileInput1 = document.getElementById('fileInput1');
+    const tableBody = document.getElementById('tableBody');
+    const rankHeader = document.getElementById('rankHeader');
+    let ascending = true;
+
+    const avatarList = [
+        'Boy.png'
+    ];
+
+    let currentData = avatarList.map((image, index) => {
+        const name = image
+        .replace(/_/g, ' ')
+        .replace('.png', '')
+        .replace(/([A-Z])/g, ' $1')
+        .trim();
+        return [image, name, ''];  
+    });
+
+    function populateTable(data) {
+        tableBody.innerHTML = '';
+
+        data.forEach(row => {
+            const tableRow = document.createElement('tr');
+
+            const avatarCell = document.createElement('td');
+            const avatarDiv = document.createElement('div');
+            championDiv.classList.add('champion-name');
+            const avatarImage = document.createElement('img');
+            avatarImage.src = 'PNG images/' + row[0]; 
+            
+            const nameCell = document.createElement('td');
+            nameCell.textContent = row[1] || '';
+
+            const attendanceCell = document.createElement('td');
+            attendanceCell.textContent = row[2] || '';  
+
+            tableRow.appendChild(avatarCell);
+            tableRow.appendChild(nameCell);
+            tableRow.appendChild(attendanceCell);
+
+            tableBody.appendChild(tableRow);
+        });
+    }
+
+    function handleFile(fileInput, callback) {
+        const file = fileInput.files[0];
+
+        const reader = new FileReader();
+        reader.addEventListener("loadend", (e) => {
+            const data = new Uint8Array(e.target.result);
+            const workbook = XLSX.read(data, { type: 'array' });
+            const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
+            const excelData = XLSX.utils.sheet_to_json(firstSheet, { header: 1 });
+
+            const filteredData = excelData.slice(1).map(row => [
+                row[0],  // Avatar
+                row[1],  // Name
+                row[2],  // Number Of Times Attended
+
+            ]);
+
+            callback(filteredData);
+        });
+        reader.readAsArrayBuffer(file);
+    }
+
+    function updateTable() {
+        if (!fileInput1.files.length) return;
+
+        handleFile(fileInput1, (fileData) => {
+            currentData = fileData;
+
+            currentData = currentData
+                .filter((row, index, self) => self.findIndex(r => r[2] === row[2]) === index)
+                .sort((a, b) => a[0] - b[0]);
+
+            populateTable(currentData);
+        });
+    }
+
+    fileInput1.addEventListener('change', updateTable);
+
+    rankHeader.addEventListener('click', () => {
+        ascending = !ascending;
+        rankHeader.classList.toggle('ascending');
+        rankHeader.classList.toggle('descending');
+        const sortedData = currentData.sort((a, b) => ascending ? a[0] - b[0] : b[0] - a[0]);
+        populateTable(sortedData);
+    });
+
+    populateTable(currentData);
+    </script>
+</body>
+</html>

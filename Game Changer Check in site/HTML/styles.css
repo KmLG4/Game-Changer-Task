@@ -111,6 +111,7 @@ img {
     border: 5px;
     border-color: #5F9EA0;
     border-style: solid;
+    vertical-align: auto;
 }
 
 .container-1 {
