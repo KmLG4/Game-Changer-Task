@@ -1,0 +1,4 @@
+<section class="about">
+            <P>We are a free gaming session that runs in 3 different locations in somerset <br> we are open to all
+                neurodiverse people aged 18 or above.</P>
+        </section>

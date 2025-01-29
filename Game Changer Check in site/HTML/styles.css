@@ -250,3 +250,28 @@ input {
     margin-left: auto;
     margin-right: auto;
 }
+
+.about_head {
+    text-align: center;
+}
+
+.desc {
+    text-align: center;
+    padding: 15px;
+}
+
+.gallery img {
+    width: 100%;
+    height: auto;
+}
+
+.gallery:hover {
+    border: 2px solid #333;
+}
+
+.gallery {
+    margin: 8px;
+    border: 1px solid #333;
+    float: left;
+    width: 360px;
+}
